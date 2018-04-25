@@ -47,7 +47,7 @@ def tracbar(orgimg):
                 img_ed[:] = img_ed[:] * float(1 + cont / 128)
         # ~ 명도조절
         #이미지 예외처리 ~
-        np.clip(img_ed,0,200,img_ed)
+        np.clip(img_ed,0,255,img_ed)
         # ~ 이미지 예외처리
         img_ed = img_ed.astype('uint8')
         #이미지 출력

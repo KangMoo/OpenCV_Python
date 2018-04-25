@@ -5,4 +5,4 @@ import numpy as np
 from task import ContrastWithTrackbar
 from task import Dissolve
 from task import LineAndMosaic
-
+from task import Mask
