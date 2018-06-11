@@ -9,7 +9,7 @@ inputmode = False
 frameCopy = None
 stopFrame = False
 cropImg = None
-MIN_MATCH_COUNT = 5
+MIN_MATCH_COUNT = 10
 MAX_MATCH_THRESH = 35
 # 프레임 중심에서 초기 창 위치 정의
 windowWidth = 1
@@ -114,11 +114,28 @@ while True:
                         dst = cv2.perspectiveTransform(pts, M)
                     #frame = cv2.polylines(frame, [np.int32(dst)], True, 255, 3, cv2.LINE_AA)
                     points = np.copy(dst)
-                    windowRow = dst[0][0][1]
-                    windowCol = dst[0][0][0]
-                    windowWidth = abs(dst[3][0][0] - dst[0][0][0])
-                    windowHeight = abs(dst[1][0][1] - dst[0][0][1])
-                    window = (windowCol, windowRow, windowWidth, windowHeight)
+                    print(dst.shape)
+                    print(dst)
+
+                    left = 1000
+                    right = 0
+                    up = 1000
+                    down = 0
+                    for x in range(np.array(dst).shape[0]):
+                        if left > dst[x][0][0]:
+                            left = dst[x][0][0]
+                        if right < dst[x][0][0]:
+                            right = dst[x][0][0]
+                        if up > dst[x][0][1]:
+                            up = dst[x][0][1]
+                        if down < dst[x][0][1]:
+                            down = dst[x][0][1]
+                    #windowRow = dst[0][0][1]
+                    #windowCol = dst[0][0][0]
+                    #windowWidth = abs(dst[3][0][0] - dst[0][0][0])
+                    #windowHeight = abs(dst[1][0][1] - dst[0][0][1])
+                    #window = (windowCol, windowRow, windowWidth, windowHeight)
+                    window = (left, up, right - left, down - up)
                     print(window)
             points = np.int0(points)
             frame = cv2.polylines(frame, [points], True, 255, 2)
